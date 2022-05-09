@@ -1,0 +1,10 @@
+{
+    "editor.fontLigatures": false,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.trimAutoWhitespace": true,
+    "python.formatting.provider": "black",
+    "cSpell.words": [],
+    "autoDocstring.generateDocstringOnEnter": true,
+}
