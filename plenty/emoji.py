@@ -1,17 +1,17 @@
-# -*- coding:utf-8 -*-
+from typing import Dict, Optional, Match, Callable, Pattern
 import sys
 import re
-from typing import Dict, Optional, Match, Callable
 
 # For encoding.
 Icon_Supported_Encoding: list = ["utf-8"]
 
+_ReStringPattern = Pattern[str]
 _ReStringMatch = Match[str]  # regex match object
 _ReSubCallable = Callable[[_ReStringMatch], str]  # Callable invoked by re.sub
 _EmojiSubMethod = Callable[[_ReSubCallable, str], str]  # Sub method of a compiled re
 # https://github.com/willmcgugan/rich/blob/master/rich/_emoji_replace.py
 
-_EMOJI_RE: _ReStringMatch = re.compile(
+_EMOJI_RE: _ReStringPattern = re.compile(
     r"(:(\S*?)(?:(?:\-)(emoji|text))?:)", re.M | re.S
 )  # allow multi lines.
 
@@ -63,7 +63,7 @@ class Emoji(object):
         *,
         default_variant: Optional[str] = None,
         _emoji_sub: _EmojiSubMethod = _EMOJI_RE.sub,
-    ):
+    ) -> str:
         get_emoji = cls.EMOTION.__getitem__
         variants = {"text": "\uFE0E", "emoji": "\uFE0F"}
         get_variant = variants.get

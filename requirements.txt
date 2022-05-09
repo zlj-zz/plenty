@@ -1,5 +1,6 @@
 flake8
 black
+mypy
 pylint
 pytest
 pytest-cov

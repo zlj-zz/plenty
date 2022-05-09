@@ -5,6 +5,8 @@
     "editor.detectIndentation": false,
     "editor.trimAutoWhitespace": true,
     "python.formatting.provider": "black",
-    "cSpell.words": [],
+    "python.linting.mypyEnabled": true,
+    "cSpell.words": [
+    ],
     "autoDocstring.generateDocstringOnEnter": true,
 }

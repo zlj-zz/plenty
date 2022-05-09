@@ -1,16 +1,17 @@
-from typing import List, Literal, Optional, Tuple, Union
+from typing import Dict, Literal, Optional, Sequence, Tuple, Union
 import re
 
 from plenty.errors import ColorError
 
 
-ColorType = Union[str, List, Tuple]
+RGBType = Tuple[int, int, int]
+ColorType = Union[str, Sequence[int]]
 ColorDepthType = Literal["fg", "bg"]
 
 # color hex string reg.
 _COLOR_RE = re.compile(r"^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{2})$")
 
-COLOR_CODE = {
+COLOR_CODE: Dict[str, str] = {
     "plain": "",
     "light_pink": "#FFB6C1",
     "pink": "#FFC0CB",
@@ -170,7 +171,7 @@ class Color:
     """
 
     hex: str
-    rgb: Tuple[int, int, int]
+    rgb: RGBType
     red: int
     green: int
     blue: int
@@ -182,7 +183,7 @@ class Color:
 
     def __init__(
         self,
-        color: Optional[ColorType] = None,
+        value: Optional[ColorType] = None,
         depth: ColorDepthType = "fg",
         default: bool = False,
     ) -> None:
@@ -197,31 +198,38 @@ class Color:
         self.depth = depth
         self.default = default
 
-        if not color:
+        # If `color` is None or empty.
+        if not value:
             self.rgb = (-1, -1, -1)
             self.hex = ""
             self.red = self.green = self.blue = -1
             self.escape = "\033[49m" if depth == "bg" and default else ""
             return
 
-        if not self.is_color(color):
-            raise ColorError("Not valid color.") from None
+        # Check the color code whether right.
+        if not self.is_color(value):
+            raise ColorError(f"Not valid color: {value}.") from None
 
-        if isinstance(color, str):
-            if color in COLOR_CODE:
-                color = COLOR_CODE[color]
-            self.rgb = rgb = self.generate_rgb(color)
-            self.hex = color
-        elif isinstance(color, (list, tuple)):  # list or tuple
-            self.rgb = rgb = color
+        if isinstance(value, str):
+            if value in COLOR_CODE:
+                value = COLOR_CODE[value]
+
+            self.rgb = rgb = self.generate_rgb(value)
+            self.hex = value
+
+        elif isinstance(value, (list, tuple)):
+            self.rgb = rgb = (value[0], value[1], value[2])
+
             # sourcery skip: replace-interpolation-with-fstring
             self.hex = "#%s%s%s" % (
                 hex(rgb[0]).lstrip("0x").zfill(2),
                 hex(rgb[1]).lstrip("0x").zfill(2),
                 hex(rgb[2]).lstrip("0x").zfill(2),
             )
-        elif isinstance(color, Color):
+
+        elif isinstance(value, Color):
             raise ColorError("The color is already Color.") from None
+
         else:
             raise ColorError(
                 "The type of color not support translate to Color."
@@ -239,7 +247,7 @@ class Color:
         yield from self.rgb
 
     @staticmethod
-    def generate_rgb(hex: str) -> Tuple:
+    def generate_rgb(hex: str) -> Tuple[int, int, int]:
         hex_len = len(hex)
         try:
             if hex_len == 3:
@@ -257,7 +265,7 @@ class Color:
             return rgb
 
     @staticmethod
-    def truecolor_to_256(rgb: Tuple) -> int:
+    def truecolor_to_256(rgb: Tuple[int, int, int]) -> int:
 
         greyscale = (rgb[0] // 11, rgb[1] // 11, rgb[2] // 11)
         if greyscale[0] == greyscale[1] == greyscale[2]:
@@ -282,8 +290,8 @@ class Color:
         """Returns escape sequence to set color
 
         Args:
-            hexa (str): accepts either 6 digit hexadecimal hexa="#RRGGBB",
-                        2 digit hexadecimal: hexa="#FF".
+            hex (str): accepts either 6 digit hexadecimal hex="#FF0000",
+                        2 digit hexadecimal: hex="#FF".
             r (int): 0-255, the r of decimal RGB.
             g (int): 0-255, the g of decimal RGB.
             b (int): 0-255, the b of decimal RGB.
@@ -322,7 +330,7 @@ class Color:
             return cls()
 
     @staticmethod
-    def is_color(code: ColorType) -> bool:
+    def is_color(code: Optional[ColorType]) -> bool:
         """Return True if code is color else False.
         Like: '#FF0000', '#FF', 'red', [255, 0, 0], (0, 255, 0)
         """

@@ -41,3 +41,4 @@ def test_generator():
     print(repr(Color.bg("#ff000f")))
     print(repr(Color.by_name("red", depth="aa")))
     print(repr(Color.by_name("#ff0000")))
+    print(Color.escape_color(None))
