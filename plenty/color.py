@@ -5,7 +5,7 @@ from plenty.errors import ColorError
 
 
 RGBType = Tuple[int, int, int]
-ColorType = Union[str, Sequence[int]]
+Colorable = Union[str, Sequence[int]]
 ColorDepthType = Literal["fg", "bg"]
 
 # color hex string reg.
@@ -183,7 +183,7 @@ class Color:
 
     def __init__(
         self,
-        value: Optional[ColorType] = None,
+        value: Optional[Colorable] = None,
         depth: ColorDepthType = "fg",
         default: bool = False,
     ) -> None:
@@ -309,11 +309,11 @@ class Color:
         return "\033[{};2;{};{};{}m".format(dint, *rgb)
 
     @classmethod
-    def fg(cls, value: ColorType) -> "Color":
+    def fg(cls, value: Colorable) -> "Color":
         return cls(value, depth="fg")
 
     @classmethod
-    def bg(cls, value: ColorType) -> "Color":
+    def bg(cls, value: Colorable) -> "Color":
         return cls(value, depth="bg")
 
     @classmethod
@@ -330,7 +330,7 @@ class Color:
             return cls()
 
     @staticmethod
-    def is_color(code: Optional[ColorType]) -> bool:
+    def is_color(code: Optional[Colorable]) -> bool:
         """Return True if code is color else False.
         Like: '#FF0000', '#FF', 'red', [255, 0, 0], (0, 255, 0)
         """
