@@ -1,16 +1,7 @@
-import re
-
-
 class Fx(object):
     """Text effects
     * trans(string: str): Replace whitespace with escape move right to not
         overwrite background behind whitespace.
-    * pure(string: str): Removes all style string.
-
-    Docs test
-        >>> txt = '\033[49;1;20m\033[1mhello word!\033[0m'
-        >>> Fx.pure(txt)
-        'hello word!'
 
     """
 

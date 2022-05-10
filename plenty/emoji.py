@@ -1,5 +1,4 @@
 from typing import Dict, Optional, Match, Callable, Pattern
-import sys
 import re
 
 # For encoding.
@@ -16,7 +15,8 @@ _EMOJI_RE: _ReStringPattern = re.compile(
 )  # allow multi lines.
 
 
-class Emoji(object):
+class Emoji:
+    """
     _EMOTION: Dict[str, str] = {
         "rainbow": "🌈",
         "smiler": "😊",
@@ -43,7 +43,13 @@ class Emoji(object):
         EMOTION = _EMOTION
     else:
         EMOTION = _WIN_EMOTION
+    """
 
+    from ._emoji_codes import EMOJI
+
+    EMOTION: Dict[str, str] = EMOJI
+
+    # Set emoji to class.
     __locals = locals()
     for k, v in EMOTION.items():
         __locals[k] = v
@@ -81,7 +87,3 @@ class Emoji(object):
                 return emoji_code
 
         return _emoji_sub(do_replace, _msg)
-
-
-if __name__ == "__main__":
-    print(Emoji.render_emoji("Today is a nice day :smiler:."))
