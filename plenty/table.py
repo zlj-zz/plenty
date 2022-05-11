@@ -498,7 +498,7 @@ class UintTable(BaseTb):
             header_row = first and show_header
             footer_row = last
 
-            if show_edge:
+            if _box and show_edge:
                 if header_row:
                     yield Segment(_box.get_top(widths, merge=True), border_style)
                 else:
@@ -514,14 +514,15 @@ class UintTable(BaseTb):
                 unit.header, sum(widths) + 1, style=header_style
             )
             max_height = len(lines)
-            cells = [set_shape(max_height, lines, sum(widths) + 1)]
+            head_cells = [set_shape(max_height, lines, sum(widths) + 1)]
             yield from self._render_line(
-                cells, max_height, box_segments, show_edge, is_header=True
+                head_cells, max_height, box_segments, show_edge, is_header=True
             )
-            yield Segment(
-                _box.get_row(widths, "head", edge=show_edge, cross_level="down"),
-                style=border_style,
-            )
+            if _box:
+                yield Segment(
+                    _box.get_row(widths, "head", edge=show_edge, cross_level="down"),
+                    style=border_style,
+                )
             yield new_line
 
             for row_cell in unit.kv.items():
