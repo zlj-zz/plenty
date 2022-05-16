@@ -15,7 +15,7 @@ from plenty.markup import render_markup
 )
 def test_style_render_markup(text: str):
     print("\n", text)
-    render_markup(text)
+    print(render_markup(text, style="sky_blue"))
 
 
 def test_console():

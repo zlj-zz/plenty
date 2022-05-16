@@ -212,7 +212,7 @@ class Style(object):
                     # Only one.
                     font_style = Fx.by_name(fx_tag)
 
-                # Get color hexa.
+                # Get color hex.
                 if color_code and color_code.startswith("#"):
                     color_style = Color.fg(color_code)
                 else:

@@ -1,7 +1,7 @@
-from typing import Generator, List, Union
+from typing import Generator, List, Optional
 
 from .emoji import Emoji
-from .style import _STYLE_RE, Style
+from .style import _STYLE_RE, Style, Styleable
 from .segment import Segment
 
 
@@ -22,10 +22,13 @@ def _parse(markup: str) -> Generator:
 
 
 def render_markup(
-    markup: str, style: Union[str, Style] = "", emoji: bool = True
+    markup: str, style: Optional[Styleable] = None, emoji: bool = True
 ) -> List[Segment]:
     if emoji:
         markup = Emoji.render_emoji(markup)
+
+    if isinstance(style, str):
+        style = Style.parse(style)
 
     renderables: List[Segment] = []
     for text, fx, color, bg_color in _parse(markup):
@@ -37,6 +40,11 @@ def render_markup(
         if bg_color:
             sgr.extend(("on", bg_color))
 
-        renderables.append(Segment(text, style=Style.parse(" ".join(sgr))))
+        if style:
+            sep_style = style + Style.parse(" ".join(sgr))
+        else:
+            sep_style = Style.parse(" ".join(sgr))
+
+        renderables.append(Segment(text, style=sep_style))
 
     return renderables
