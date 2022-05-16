@@ -1,4 +1,4 @@
-class Fx(object):
+class Fx:
     """Text effects
     * trans(string: str): Replace whitespace with escape move right to not
         overwrite background behind whitespace.
