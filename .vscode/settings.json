@@ -7,7 +7,10 @@
     "python.formatting.provider": "black",
     "python.linting.mypyEnabled": true,
     "cSpell.words": [
-        "isclass"
+        "dataclass",
+        "fstring",
+        "isclass",
+        "Renderable"
     ],
     "autoDocstring.generateDocstringOnEnter": true,
 }

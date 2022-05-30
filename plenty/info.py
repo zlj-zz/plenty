@@ -1,3 +1,9 @@
+#
+# ==============================
+# Save some package information.
+# ==============================
+#
+
 VERSION = "1.0.2-dev"
 PROJECT = "plenty"
 
