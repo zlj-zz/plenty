@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Any, Dict, Generator, List, Optional, Tuple, U
 from dataclasses import dataclass, field
 
 from ._table import BaseTb
-from .style import Style, Styleable
+from .style import Style, StyleType
 from .segment import Segment
 from .ratio import ratio_reduce
 from ._loop import loop_first_last, loop_last
@@ -52,8 +52,8 @@ class Table(BaseTb):
     def add_column(
         self,
         header,
-        header_style: Optional[Styleable] = "bold",
-        style: Optional[Styleable] = None,
+        header_style: Optional[StyleType] = "bold",
+        style: Optional[StyleType] = None,
         no_wrap: bool = False,
     ) -> None:
         column = Column(
@@ -67,7 +67,7 @@ class Table(BaseTb):
         self._columns.append(column)
 
     def add_row(
-        self, *values: Any, style: Optional[Styleable] = None, end_section: bool = False
+        self, *values: Any, style: Optional[StyleType] = None, end_section: bool = False
     ) -> None:
         cells = list(values)
         columns = self._columns

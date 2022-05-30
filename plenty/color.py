@@ -265,11 +265,11 @@ class Color:
             return rgb
 
     @staticmethod
-    def truecolor_to_256(rgb: Tuple[int, int, int]) -> int:
+    def true_color_to_256(rgb: Tuple[int, int, int]) -> int:
 
-        greyscale = (rgb[0] // 11, rgb[1] // 11, rgb[2] // 11)
-        if greyscale[0] == greyscale[1] == greyscale[2]:
-            return 232 + greyscale[0]
+        grayscale = (rgb[0] // 11, rgb[1] // 11, rgb[2] // 11)
+        if grayscale[0] == grayscale[1] == grayscale[2]:
+            return 232 + grayscale[0]
         else:
             return (
                 round(rgb[0] / 51) * 36
@@ -304,7 +304,7 @@ class Color:
         rgb = cls.generate_rgb(hex) if hex else (r, g, b)
 
         if not Color.TRUE_COLOR:
-            return "\033[{};5;{}m".format(dint, Color.truecolor_to_256(rgb=rgb))
+            return "\033[{};5;{}m".format(dint, Color.true_color_to_256(rgb=rgb))
 
         return "\033[{};2;{};{};{}m".format(dint, *rgb)
 

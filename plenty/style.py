@@ -2,7 +2,7 @@ from typing import List, Optional, Match, Pattern, Union
 import re
 
 from plenty.color import Color, Colorable
-from plenty.font import Fx
+from plenty.effect import TextEffect
 
 from .errors import StyleSyntaxError
 
@@ -104,12 +104,12 @@ class Style(object):
     def _make_ansi_code(self) -> str:
         if self._ansi is None:
             sgr: List[str] = []
-            fx_map = Fx.code_map
+            fx_map = TextEffect.Code_Map
 
             if attributes := self._set_attributes & self._attributes:
                 sgr.extend(fx_map[bit] for bit in range(6) if attributes & (1 << bit))
 
-            self._ansi = f"{Fx.start}{';'.join(sgr)}{Fx.end}"
+            self._ansi = f"{TextEffect.START}{TextEffect.SEP.join(sgr)}{TextEffect.END}"
             if self.color:
                 self._ansi += Color.fg(self.color).escape
             if self.bg_color:
@@ -120,7 +120,7 @@ class Style(object):
 
     def render(self, text: str) -> str:
         attrs = self._make_ansi_code()
-        return f"{attrs}{text}{Fx.reset}" if attrs else text
+        return f"{attrs}{text}{TextEffect.RESET}" if attrs else text
 
     def test(self, text: Optional[str] = None) -> None:
         text = text or str(self)
@@ -153,7 +153,7 @@ class Style(object):
 
     @classmethod
     def parse(cls, style_definition: str) -> "Style":
-        FX_ATTRIBUTES = Fx.supports
+        FX_ATTRIBUTES = TextEffect.Supports
         color = ""
         bg_color = ""
         attributes = {}
@@ -204,11 +204,12 @@ class Style(object):
                     # Has multi fx tags.
                     fx_tag = fx_tag[1:-1]
                     font_style = "".join(
-                        Fx.by_name(fx_code.strip()) for fx_code in fx_tag.split(",")
+                        TextEffect.by_name(fx_code.strip())
+                        for fx_code in fx_tag.split(",")
                     )
                 else:
                     # Only one.
-                    font_style = Fx.by_name(fx_tag)
+                    font_style = TextEffect.by_name(fx_tag)
 
                 # Get color hex.
                 if color_code and color_code.startswith("#"):
@@ -246,4 +247,4 @@ class Style(object):
 
 NULL_STYLE = Style()
 
-Styleable = Union[Style, str]
+StyleType = Union[Style, str]

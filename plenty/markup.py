@@ -1,7 +1,7 @@
 from typing import Generator, List, Optional
 
 from .emoji import Emoji
-from .style import _STYLE_RE, Style, Styleable
+from .style import _STYLE_RE, Style, StyleType
 from .segment import Segment
 
 
@@ -22,7 +22,7 @@ def _parse(markup: str) -> Generator:
 
 
 def render_markup(
-    markup: str, style: Optional[Styleable] = None, emoji: bool = True
+    markup: str, style: Optional[StyleType] = None, emoji: bool = True
 ) -> List[Segment]:
     if emoji:
         markup = Emoji.render_emoji(markup)
