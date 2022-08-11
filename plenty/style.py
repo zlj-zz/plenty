@@ -28,6 +28,8 @@ _STYLE_RE: Pattern[str] = re.compile(
 
 _STYLE_ANSI_RE: Pattern[str] = re.compile(r"\033\[\d+;\d?;?\d*;?\d*;?\d*m|\033\[\d+m")
 
+# [yellow]Today[/yellow] is a nice [red]day[/red]
+
 
 class Style(object):
     def __init__(

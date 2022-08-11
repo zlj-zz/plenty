@@ -4,7 +4,7 @@ import pytest
 # from .utils import analyze_it
 
 from plenty.console import Console
-from plenty.markup import render_markup
+from plenty.markup import render_markup, markup
 
 
 @pytest.mark.parametrize(
@@ -21,3 +21,7 @@ def test_style_render_markup(text: str):
 def test_console():
     console = Console()
     console.echo([1, 2, 3, 4, 5])
+
+
+def test():
+    markup("Hello, [bold magenta]World[/bold magenta]! I'am [red]Zachary[/red]")
