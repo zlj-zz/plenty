@@ -2,8 +2,8 @@
 import os, sys
 
 # Add source environment.
-_PIGIT_PATH = os.path.dirname(os.path.dirname(__file__))
-sys.path.insert(0, _PIGIT_PATH)
+_PLENTY_PATH = os.path.dirname(os.path.dirname(__file__))
+sys.path.insert(0, _PLENTY_PATH)
 
 TEST_PATH = os.path.dirname(__file__)
 

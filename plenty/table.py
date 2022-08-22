@@ -1,11 +1,8 @@
-# -*- coding:utf-8 -*-
-
-from typing import TYPE_CHECKING, Dict, Generator, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, Dict, Generator, List, Optional, Tuple, Union
 from dataclasses import dataclass, field
 
-# from . import box
 from ._table import BaseTb
-from .style import Style, Styleable
+from .style import Style, StyleType
 from .segment import Segment
 from .ratio import ratio_reduce
 from ._loop import loop_first_last, loop_last
@@ -55,8 +52,8 @@ class Table(BaseTb):
     def add_column(
         self,
         header,
-        header_style: Optional[Styleable] = "bold",
-        style: Optional[Styleable] = None,
+        header_style: Optional[StyleType] = "bold",
+        style: Optional[StyleType] = None,
         no_wrap: bool = False,
     ) -> None:
         column = Column(
@@ -70,13 +67,13 @@ class Table(BaseTb):
         self._columns.append(column)
 
     def add_row(
-        self, *values, style: Optional[Styleable] = None, end_section: bool = False
+        self, *values: Any, style: Optional[StyleType] = None, end_section: bool = False
     ) -> None:
-        cells = values
+        cells = list(values)
         columns = self._columns
 
         if len(values) < len(columns):
-            cells = [*cells, *[None] * len(columns) - len(values)]
+            cells = [*values, *[None] * (len(columns) - len(values))]
 
         for idx, cell in enumerate(cells):
             if idx == len(columns):
@@ -529,6 +526,7 @@ class UintTable(BaseTb):
                 max_height = 1
                 cells: List = []
 
+                # FIXME: may has error
                 for width, cell, style in zip(widths, row_cell, unit.kv_style):
                     lines = console.render_lines(cell, width, style=get_style(style))
                     max_height = max(max_height, len(lines))

@@ -5,7 +5,7 @@ from itertools import islice
 from inspect import isclass
 from shutil import get_terminal_size
 
-from .style import Style
+from .style import Style, StyleType
 from .markup import render_markup
 from .segment import Segment
 from .emoji import Emoji
@@ -48,7 +48,7 @@ class Console:
         return sys.getdefaultencoding().lower()
 
     def get_style(
-        self, name: Union[str, Style], *, default: Optional[Union[str, Style]] = None
+        self, name: StyleType, *, default: Optional[StyleType] = None
     ) -> Style:
         if isinstance(name, Style):
             return name

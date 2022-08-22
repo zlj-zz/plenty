@@ -20,3 +20,9 @@ class MissingStyle(Exception):
     """No such style."""
 
     pass
+
+
+class MarkupError(Exception):
+    """Markup error."""
+
+    pass
