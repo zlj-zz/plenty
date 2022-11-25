@@ -4,7 +4,7 @@
 # ==============================
 #
 
-VERSION = "1.0.2-dev"
+VERSION = "1.0.2"
 PROJECT = "plenty"
 
 URL = "https://github.com/zlj-zz/plenty"

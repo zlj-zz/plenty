@@ -25,3 +25,5 @@ def test_console():
 
 def test():
     markup("Hello, [bold magenta]World[/bold magenta]! I'am [red]Zachary[/red]")
+
+    markup("Yes, [bold]Today is [red]nice[/red][/bold]")
