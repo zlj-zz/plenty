@@ -127,6 +127,7 @@ class Style(object):
     def test(self, text: Optional[str] = None) -> None:
         text = text or str(self)
         print(self.render(text))
+        print(self.render(text).__repr__())
 
     def __add__(self, style: Optional["Style"]) -> "Style":
         if not (isinstance(style, Style) or Style is None):

@@ -363,7 +363,7 @@ class UintTable(BaseTb):
     def add_unit(
         self,
         header: str,
-        header_style: Union[str, Style] = None,
+        header_style: Union[None, str, Style] = None,
         values: Optional[Dict] = None,
         values_style: Union[None, str, Style, List[Union[str, Style]]] = None,
     ) -> Unit:

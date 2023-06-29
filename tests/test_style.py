@@ -47,6 +47,8 @@ class TestStyle:
         ["color", "bg_color", "bold", "dark", "italic", "underline", "blink", "strick"],
         [
             ["green", "", None, None, None, None, None, None],
+            ["error", "", None, None, None, None, None, None],
+            ["right", "", None, None, None, None, None, None],
             [(255, 255, 0), "", None, None, None, None, None, None],
             ["#ff0000", "green", None, None, None, None, None, None],
             ["", "yellow", None, None, None, None, None, None],

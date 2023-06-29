@@ -38,6 +38,11 @@ def test_instance(color_string):
 
 def test_generator():
     print(repr(Color.fg("#ff0000")))
+    print("notify", repr(Color.fg("#2c98d2")))
+    print("warn", repr(Color.fg("#d2c400")))
+    print('error',repr(Color.fg("#d2401b")))
+    print('great',repr(Color.fg("#4ad245")))
+    print(repr(Color.fg("#ff0000")))
     print(repr(Color.bg("#ff000f")))
     print(repr(Color.by_name("red", depth="aa")))
     print(repr(Color.by_name("#ff0000")))
